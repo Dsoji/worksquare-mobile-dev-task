@@ -1,98 +1,108 @@
-Worksquare Senior Mobile App Developer Vetting Task
+# Worksquare Senior Mobile App Developer Vetting Task
 
-Welcome to the vetting assessment for Senior Mobile App Developers at Worksquare.
+Welcome to the vetting assessment for **Senior Mobile App Developers** at Worksquare.
 
-This task is designed to evaluate your ability to build a clean, intuitive, and performant mobile user interface from a dataset. We want to understand how you structure your project, manage state, and implement thoughtful design for mobile users.
+This task is meant to assess your skills in building a modern, mobile-first housing listings interface. We're particularly interested in your ability to structure mobile apps, manage state effectively, and design an intuitive user experience.
 
- Objective
-Build a housing listings mobile interface using React Native or Flutter. Your goal is to display available properties in a user-friendly, filterable list with modern UI and smooth UX.
+---
 
-✅ Requirements
-🧱 Stack (choose one)
-React Native (preferred with Expo)
+##  Objective
 
-Flutter
+Build a housing listings app using either **React Native** (with or without Expo) or **Flutter**.  
+The app should display a list of available properties in a user-friendly format, with support for filtering by **location** and **property type**.
 
- Task Details
-Load data from a provided listings.json file
+---
 
-Display property listings in a scrollable card/list/grid layout
+##  Tech Stack
 
-Implement filtering and/or searching by:
+Choose **one** of the following:
 
-Location
+- React Native (with functional components and Hooks)
+- Flutter (with null safety and modern best practices)
 
-Property Type
+---
 
-Include loading state and empty state handling
+##  Requirements
 
-Add UI animations/transitions (e.g., loading, hover, list updates)
+- Load housing data from a provided `listings.json` file
+- Display listings in a scrollable, responsive layout (list/grid)
+- Implement **filters or search** for:
+  - Location
+  - Property Type
+- Handle **loading** and **empty** states gracefully
+- Include **UI animations or transitions** (e.g. loading shimmer, button feedback, list item animations)
+- Use clean, modular code architecture
+- Style with platform-specific best practices (or Tailwind-like utility frameworks where supported)
+- Ensure the UI looks good across different screen sizes
 
-Use modular component architecture
+---
 
-Prioritize mobile responsiveness and cross-device consistency
+##  Project Structure & Architecture
 
-Follow accessibility best practices
+You should include a `docs/` folder or describe in the `README.md`:
 
-- Architecture & Approach (to be documented in docs/ or README.md)
-Include:
+- Component structure and folder organization
+-  State management approach (e.g. Redux, Context API, Riverpod, Provider) and your reasoning
+-  Any UI/UX design decisions and rationale
+-  Screenshot(s) or design inspiration (optional)
 
-Project folder structure
+---
 
-State management choice (e.g., Context API, Redux, Riverpod, Provider) and why
+##  Documentation Checklist
 
-Component architecture and separation of concerns
+Your final submission should include the following in the `README.md`:
 
-UI/UX rationale (e.g., navigation decisions, list layouts, spacing, filtering approach)
+- How to set up and run the app
+- Tools and libraries used (e.g. navigation, state management, animation)
+- Description of your approach and thought process
+- Any limitations, trade-offs, or features you would improve
+- Where and how AI was used (if applicable)
+- Screenshots or screen recordings (optional but encouraged)
 
-Screenshot or design reference if any
+---
 
-- Documentation
-Your README.md must include:
+##  What We're Evaluating
 
-Setup instructions for running the app
+- Clean, maintainable, and scalable code
+- Logical and modular folder structure
+- Intuitive user interface and smooth experience
+- Creative problem-solving and developer reasoning
+- Good Git commit history (granular and descriptive commits)
 
-Stack/tools/libraries used
+---
 
-Your development approach and decisions
+##  Submission Instructions
 
-Notes on any trade-offs or limitations
+1. **Fork this repository**
+2. Set up your mobile app project inside the fork (no starter files are provided)
+3. Work in a branch named after your **GitHub handle**
+4. Push your final code to GitHub
+5. Send us an email with the following:
+   - GitHub repository link
+   - Live demo link (e.g. Expo, APK file, or TestFlight)
+   - Any relevant notes or context about your work
 
+---
 
-If you used AI (e.g. for code suggestions, design, or logic assistance), kindly document where and how it was used.
+##  Deadline
 
-- What We’re Looking For
-Clean, scalable, and well-documented code
+You have **48 hours** to complete and submit the task from the time it is assigned.
 
-Modular and reusable component design
+---
 
-Smooth and thoughtful user interactions
+##  Data File
 
-Strong understanding of state management
+You will receive a `listings.json` file separately.  
+Copy it into your local project and use it as your data source.
 
-Efficient filtering/search logic
+---
 
-Well-structured Git usage and commit messages
+##  AI Usage Disclaimer
 
-- Submission Guidelines
-Fork this repository
+You are welcome to use AI tools (e.g. ChatGPT, GitHub Copilot) to assist with the task.  
+If you do, please document **where and how** AI was used — this does not count against you.
 
-Create a new branch using your GitHub handle or name
+---
 
-Add your mobile project inside the fork (no starter files provided)
-
-Push your work to GitHub
-
-Email us with:
-
-GitHub repo link
-
-Hosted APK/TestFlight link or Expo/Flutter demo (if available)
-
-Any relevant notes on your solution
-
-- Deadline
-Submit your solution within 48 hours of receiving this task.
-
-- Listings Data
-We will send a listings.json file separately. Paste this into your project and use it as your data source.
+Good luck, and happy coding!  
+**— Worksquare Team**
