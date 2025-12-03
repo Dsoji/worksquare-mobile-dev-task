@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:worksquare_mobile_devtask/features/home/model/filter_config.dart';
 import 'package:worksquare_mobile_devtask/features/home/providers/listings_provider.dart';
 import 'package:worksquare_mobile_devtask/features/home/utils/listing_utils.dart';
@@ -385,7 +386,7 @@ class _LocationSelector extends StatelessWidget {
         ),
         const SizedBox(width: AppSpacing.sm),
         Expanded(
-          child: DropdownButtonFormField<String>(
+          child: DropdownButtonFormField2<String?>(
             value: selectedLocation,
             isExpanded: true,
             decoration: const InputDecoration(
@@ -400,12 +401,13 @@ class _LocationSelector extends StatelessWidget {
             ),
             hint: const Text('Anywhere'),
             items: [
-              const DropdownMenuItem<String>(
+              const DropdownMenuItem<String?>(
                 value: null,
                 child: Text('Anywhere'),
               ),
               ...locations.map(
-                (loc) => DropdownMenuItem<String>(value: loc, child: Text(loc)),
+                (loc) =>
+                    DropdownMenuItem<String?>(value: loc, child: Text(loc)),
               ),
             ],
             onChanged: onChanged,

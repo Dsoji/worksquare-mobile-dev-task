@@ -26,11 +26,16 @@ class ListingGridItem extends StatelessWidget {
       duration: Duration(milliseconds: 350 + animationDelayIndex * 80),
       curve: Curves.easeOutCubic,
       builder: (context, value, child) {
+        // Slight fade-in + lift + scale for a more premium entrance.
+        final double opacity = value;
+        final double translateY = 24 * (1 - value);
+        final double scale = 0.95 + (0.05 * value);
+
         return Opacity(
-          opacity: value,
+          opacity: opacity,
           child: Transform.translate(
-            offset: Offset(0, 20 * (1 - value)),
-            child: child,
+            offset: Offset(0, translateY),
+            child: Transform.scale(scale: scale, child: child),
           ),
         );
       },

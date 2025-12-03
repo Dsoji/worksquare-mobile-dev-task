@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/services.dart';
-import 'package:worksquare_mobile_devtask/features/home/home_screen.dart';
+import 'package:worksquare_mobile_devtask/features/splash/splash_screen.dart';
 
 void main() async {
   try {
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      home: const SplashScreen(),
     );
   }
 }
