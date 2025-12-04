@@ -122,6 +122,31 @@ The app will start on the splash screen, then navigate to the home listings grid
 
 ---
 
+##  Submission Summary
+
+### Component Structure & Organization
+- **Feature-first layout** keeps each flow self-contained: `lib/features/home` hosts its models, providers, utils, and widgets; `lib/features/splash` owns splash-only logic.
+- **Common resources** (spacing, typography, asset helpers) live under `lib/common/res`, ensuring UI consistency without duplicating constants.
+- **Entry point** `lib/main.dart` wires Material 3 theme data, color scheme, and a global `ProviderScope`, while assets (JSON, screenshots) sit in `assets/`.
+
+### State Management
+- Uses **`hooks_riverpod` + `flutter_hooks`**:
+  - `FutureProvider<List<Listing>>` (`listings_provider.dart`) handles async JSON parsing with built-in loading/error states.
+  - Hook state (`useState`, `useMemoized`) keeps transient UI interactions—like active filters, sheet visibility, staggered animation offsets—local to `HomeScreen`.
+- Reasoning: Riverpod’s immutable providers and test-friendly architecture scale better than `setState` or `Provider`, while hooks keep widget trees lean and declarative without boilerplate.
+
+### UI / UX Decisions
+- **Home listings grid** uses `flutter_staggered_grid_view` for a masonry feel, shimmer placeholders to avoid layout shifts, and staggered fade/scale animations for perceived performance.
+- **Filters** live in a reusable bottom sheet (`home_filter_sheet.dart`) with chip-style toggles, sliders, and dropdowns so criteria are discoverable but non-intrusive; location stays as a persistent dropdown for quick changes.
+- **Detail view** leans on hero transitions, price chips, and concise attribute rows (beds/baths/sqft) to establish hierarchy and readability.
+- **Accessibility** considerations include `Semantics` wrappers around cards/buttons, color contrast tuned for dark mode, and larger tap targets on filter controls.
+
+### Screenshots / Inspiration
+- High-fidelity mocks were inspired by modern housing apps (Airbnb, Zillow) emphasizing immersive imagery and clean typography.
+- Reference screenshots are stored in `assets/screenshot/` and showcased earlier in this README for quick visual context.
+
+---
+
 ##  Limitations & Future Improvements
 
 - The detail screen uses a generated description; a real backend would provide richer content (amenities, square footage, etc.).
