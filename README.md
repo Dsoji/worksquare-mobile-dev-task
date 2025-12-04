@@ -11,63 +11,134 @@ This task is meant to assess your skills in building a modern, mobile-first hous
 Build a housing listings app using either **React Native** (with or without Expo) or **Flutter**.  
 The app should display a list of available properties in a user-friendly format, with support for filtering by **location** and **property type**.
 
----
 
-##  Tech Stack
-
-Choose **one** of the following:
-
-- React Native (with functional components and Hooks)
-- Flutter (with null safety and modern best practices)
-
----
-
-##  Requirements
-
-- Load housing data from a provided `listings.json` file
-- Display listings in a scrollable, responsive layout (list/grid)
-- Implement **filters or search** for:
-  - Location
-  - Property Type
-- Handle **loading** and **empty** states gracefully
-- Include **UI animations or transitions** (e.g. loading shimmer, button feedback, list item animations)
-- Use clean, modular code architecture
-- Style with platform-specific best practices (or Tailwind-like utility frameworks where supported)
-- Ensure the UI looks good across different screen sizes
-
----
 
 ##  Project Structure & Architecture
 
-You should include a `docs/` folder or describe in the `README.md`:
+This implementation uses a **feature-first** Flutter architecture with clear separation between UI, state, and utilities.
 
-- Component structure and folder organization
--  State management approach (e.g. Redux, Context API, Riverpod, Provider) and your reasoning
--  Any UI/UX design decisions and rationale
--  Screenshot(s) or design inspiration (optional)
+- **Top-level**
+  - `lib/main.dart` – app entry, global `ThemeData`, and `ProviderScope`.
+  - `assets/` – images, icons, JSON data (including `assets/json/listing.json`).
+- **Common modules**
+  - `lib/common/res/`
+    - `base.dart` – base asset paths and API URLs.
+    - `assets.dart` – strongly typed asset paths (e.g. `ImageAssets.logo`).
+    - `app_spacing.dart` – spacing constants used across the UI.
+    - `app_typography.dart` – shared text-style helpers.
+- **Features**
+  - `lib/features/splash/`
+    - `splash_screen.dart` – splash that routes to `HomeScreen`.
+  - `lib/features/home/`
+    - `home_screen.dart` – main listings grid, filters UI, and shimmer states.
+    - `listing_details.dart` – property details view.
+    - `model/`
+      - `listing_model.dart` – `Listing` data model parsed from JSON.
+      - `filter_config.dart` – immutable filter configuration passed to the sheet.
+    - `providers/`
+      - `listings_provider.dart` – Riverpod `FutureProvider` loading the JSON listings.
+    - `utils/`
+      - `listing_utils.dart` – helpers for price parsing, location extraction, hero tags.
+    - `widgets/`
+      - `listing_grid_item.dart` – animated listing card + hero transition.
+      - `home_filter_sheet.dart` – bottom sheet for filters (type, price, bedrooms).
+
+### State Management
+
+- **Library**: `hooks_riverpod` + `flutter_hooks`.
+- **Reasoning**:
+  - `FutureProvider` cleanly encapsulates async JSON loading and error/loading states.
+  - Hooks (`useState`) keep local UI state (filters, visible count) scoped to the screen.
+  - Riverpod’s immutability and testability support scaling to more features.
+
+### UI / UX Decisions
+
+- Listings are shown in a **staggered 2-column grid** with:
+  - Shimmer placeholders that mirror the final card layout to reduce layout shift.
+  - **Staggered entrance animations** (fade, lift, scale) for each card.
+  - **Hero animation** between the grid image and the detail header.
+- Filters:
+  - A **bottom-sheet filter** for property type, price range, and minimum bedrooms.
+  - A **persistent location dropdown** above the grid using `dropdown_button2` so location is always visible and easy to change.
+- Details screen:
+  - Emphasizes hero image, price chip, and key attributes (beds/baths) with clear hierarchy.
+- Accessibility:
+  - `Semantics` wrappers for listing cards and the filter button.
+  - Color choices tuned for better contrast in dark mode (e.g. price chip background vs. text).
+- Screenshots:
+
+  <p align="center">
+    <img src="assets/screenshot/Simulator Screenshot - iPhone 16 - 2025-12-04 at 08.11.05.png" alt="Worksquare app screenshot 1" width="250" />
+    <img src="assets/screenshot/Simulator Screenshot - iPhone 16 - 2025-12-04 at 08.11.10.png" alt="Worksquare app screenshot 2" width="250" />
+    <img src="assets/screenshot/Simulator Screenshot - iPhone 16 - 2025-12-04 at 08.11.14.png" alt="Worksquare app screenshot 3" width="250" />
+    <img src="assets/screenshot/Simulator Screenshot - iPhone 16 - 2025-12-04 at 08.11.20.png" alt="Worksquare app screenshot 4" width="250" />
+  </p>
 
 ---
 
-##  Documentation Checklist
+##  How to Run the App
 
-Your final submission should include the following in the `README.md`:
+1. **Install Flutter**
+   - Ensure Flutter (3.8.x+ compatible with `sdk: ^3.8.1`) is installed and on your PATH.
+2. **Get dependencies**
+   - From the project root:
+     - `flutter pub get`
+3. **Run on a device or emulator**
+   - `flutter run`  
+   - Select your desired simulator/emulator or connected device.
 
-- How to set up and run the app
-- Tools and libraries used (e.g. navigation, state management, animation)
-- Description of your approach and thought process
-- Any limitations, trade-offs, or features you would improve
-- Where and how AI was used (if applicable)
-- Screenshots or screen recordings (optional but encouraged)
+The app will start on the splash screen, then navigate to the home listings grid.
 
 ---
 
-##  What We're Evaluating
+##  Tools & Libraries Used
 
-- Clean, maintainable, and scalable code
-- Logical and modular folder structure
-- Intuitive user interface and smooth experience
-- Creative problem-solving and developer reasoning
-- Good Git commit history (granular and descriptive commits)
+- **Core**
+  - Flutter (Material 3)
+  - `hooks_riverpod` – state management.
+  - `flutter_hooks` – hook-based widget lifecycle/helpers.
+- **UI / UX**
+  - `staggered_grid_view` – staggered grid layout for listings.
+  - `shimmer` – loading skeletons for cards.
+  - `dropdown_button2` – enhanced dropdown for location selection.
+- **Other**
+  - Built-in `Navigator` and `MaterialPageRoute` for navigation.
+
+---
+
+##  Approach & Thought Process
+
+- Started with **data loading and modeling**: parse JSON into a strongly typed `Listing` model and expose it through a `FutureProvider`.
+- Designed a **feature-first folder structure** so each feature (`home`, `splash`) owns its models, providers, utils, and widgets.
+- Focused on **separation of concerns**:
+  - `home_screen.dart` handles layout and wiring.
+  - Providers handle data fetching.
+  - Utils provide pure transformation functions.
+  - Widgets encapsulate reusable UI (card, filter sheet).
+- Iteratively improved UX:
+  - Added shimmer while loading and nice empty/error states.
+  - Introduced filters and then refactored them into a dedicated sheet and `FilterConfig`.
+  - Polished card animations and added hero transitions for a premium feel.
+
+---
+
+##  Limitations & Future Improvements
+
+- The detail screen uses a generated description; a real backend would provide richer content (amenities, square footage, etc.).
+- Filters are all client-side on the JSON; a real app would likely integrate server-side filtering and pagination.
+- Only one theme variant is tuned (dark-first); more time could be spent on light theme polish and accessibility audits.
+- No offline caching or error retry UI yet.
+
+---
+
+##  AI Usage
+
+- AI assistance (ChatGPT/Cursor) was used to:
+  - Suggest UX enhancements (hero animations, shimmer layout, filter refactor).
+  - Generate some boilerplate for providers, utils, and this README documentation.
+- All generated code and text were reviewed and adjusted to fit the project’s architecture and requirements.
+
+---
 
 ---
 
@@ -84,25 +155,3 @@ Your final submission should include the following in the `README.md`:
 
 ---
 
-##  Deadline
-
-You have **48 hours** to complete and submit the task from the time it is assigned.
-
----
-
-##  Data File
-
-You will receive a `listings.json` file separately.  
-Copy it into your local project and use it as your data source.
-
----
-
-##  AI Usage Disclaimer
-
-You are welcome to use AI tools (e.g. ChatGPT, GitHub Copilot) to assist with the task.  
-If you do, please document **where and how** AI was used — this does not count against you.
-
----
-
-Good luck, and happy coding!  
-**— Worksquare Team**

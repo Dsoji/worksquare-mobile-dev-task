@@ -48,11 +48,12 @@ class _HomeFilterSheetState extends State<HomeFilterSheet> {
     _statusList = statuses.toList()..sort();
 
     // Derive min/max price and bedrooms for sliders.
-    final prices = widget.listings
-        .map((l) => parsePriceToInt(l.price))
-        .whereType<int>()
-        .toList()
-      ..sort();
+    final prices =
+        widget.listings
+            .map((l) => parsePriceToInt(l.price))
+            .whereType<int>()
+            .toList()
+          ..sort();
     _minPrice = prices.isNotEmpty ? prices.first : 0;
     _maxPrice = prices.isNotEmpty ? prices.last : 0;
 
@@ -60,11 +61,8 @@ class _HomeFilterSheetState extends State<HomeFilterSheet> {
     _bedroomOptions = beds.toSet().toList()..sort();
 
     final initialRange = widget.initialConfig.priceRange;
-    _priceRange = initialRange ??
-        RangeValues(
-          _minPrice.toDouble(),
-          _maxPrice.toDouble(),
-        );
+    _priceRange =
+        initialRange ?? RangeValues(_minPrice.toDouble(), _maxPrice.toDouble());
   }
 
   String _formatNaira(int value) {
@@ -195,7 +193,8 @@ class _HomeFilterSheetState extends State<HomeFilterSheet> {
                     ChoiceChip(
                       label: const Text('Any'),
                       selected: _minBedrooms == null,
-                      onSelected: (_) {
+                      onSelected: (selected) {
+                        if (!selected) return;
                         setState(() {
                           _minBedrooms = null;
                         });
@@ -205,9 +204,9 @@ class _HomeFilterSheetState extends State<HomeFilterSheet> {
                       ChoiceChip(
                         label: Text('$bedsCount+ bedrooms'),
                         selected: _minBedrooms == bedsCount,
-                        onSelected: (_) {
+                        onSelected: (selected) {
                           setState(() {
-                            _minBedrooms = bedsCount;
+                            _minBedrooms = selected ? bedsCount : null;
                           });
                         },
                       ),
@@ -219,12 +218,14 @@ class _HomeFilterSheetState extends State<HomeFilterSheet> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    widget.onApply(FilterConfig(
-                      status: _status,
-                      location: widget.initialConfig.location,
-                      priceRange: _priceRange,
-                      minBedrooms: _minBedrooms,
-                    ));
+                    widget.onApply(
+                      FilterConfig(
+                        status: _status,
+                        location: widget.initialConfig.location,
+                        priceRange: _priceRange,
+                        minBedrooms: _minBedrooms,
+                      ),
+                    );
                     Navigator.of(context).pop();
                   },
                   child: const Text('Done'),
@@ -237,5 +238,3 @@ class _HomeFilterSheetState extends State<HomeFilterSheet> {
     );
   }
 }
-
-
